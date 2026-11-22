@@ -329,10 +329,12 @@ function scorersView(){
 }
 
 // --- Játékosok: a hatvani keretek összes szereplője, a választás ezen a készüléken megmarad ---
+const NO_SUB = new Set(C0.notSubbedIn || []);
 const playerStats = name => played.map(m => { const lu = m.isHome?m.lh:m.la, side = m.isHome?'h':'a';
   const p = lu.players.find(x=>x.name===name), b = lu.subs.find(x=>x.name===name);
   const goals = m.events.filter(e=>e.side===side && /goal/.test(e.type) && e.type!=='own_goal' && e.name===name).length;
-  const on = m.events.find(e=>e.side===side && e.type==='swap' && e.in===name);
+  // A cserepadról mindenki beáll (az adatbank nem mindig rögzíti), kivéve a content.js-ben felsoroltakat
+  const on = m.events.find(e=>e.side===side && e.type==='swap' && e.in===name) || (b && !NO_SUB.has(name) ? {min:null} : null);
   return {m, start:!!p, bench:!!b, on, num:(p||b||{}).n, goals}; });
 const ROSTER = (() => {
   const names = new Set();
@@ -367,7 +369,7 @@ function playerView(){
     <div class="big"><div><b>${starts}</b><span>kezdő</span></div><div><b>${on}</b><span>beállt csereként</span></div><div><b>${goals}</b><span>gól</span></div><div><b>${starts+bench}/${played.length}</b><span>keretben</span></div></div></section>
     <h2 class="sec">Fordulónként</h2><div class="rounds">${apps.slice().reverse().map(a=>`<button class="rc" data-round="${a.m.round}">
       <div class="rno">${a.m.round}.<small>FORD.</small></div><img src="${logo(a.m.opp)}" alt="">
-      <div class="opp"><b>${esc(short(a.m.opp))}</b><span>${a.start?'Kezdő':a.on?`Csereként beállt (${a.on.min}')`:a.bench?'Cserepad':'Nem volt keretben'}${a.num?` · ${a.num}-es mez`:''}${a.goals?' · '+'⚽'.repeat(a.goals):''}</span></div>
+      <div class="opp"><b>${esc(short(a.m.opp))}</b><span>${a.start?'Kezdő':a.on?`Csereként beállt${a.on.min?` (${a.on.min}')`:''}`:a.bench?'Cserepad':'Nem volt keretben'}${a.num?` · ${a.num}-es mez`:''}${a.goals?' · '+'⚽'.repeat(a.goals):''}</span></div>
       <div class="sc">${a.m.gf}–${a.m.ga}<span class="pill ${a.m.r}">${RL[a.m.r]}</span></div></button>`).join('')}</div>`;
 }
 
