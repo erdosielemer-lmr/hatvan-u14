@@ -1,4 +1,4 @@
-# Csapatképek és nyilatkozatok
+# Csapatképek
 
 Minden fordulónak saját mappája van: `fordulo-01` … `fordulo-22`.
 
@@ -9,11 +9,6 @@ Minden fordulónak saját mappája van: `fordulo-01` … `fordulo-22`.
 
 A képek nevét nem kell átírni. Ha több kép van egy mappában, mindegyik megjelenik, ábécérendben.
 
-**Nyilatkozat (pl. a Facebookról):**
-1. A forduló mappájában: **Add file → Create new file**, a fájl neve: `nyilatkozat.txt`.
-2. Másold bele a szöveget. Két külön sorba írhatod még ezeket is, ha vannak:
-   - `Szerző: Edző Neve`
-   - `Forrás: https://facebook.com/...`
-3. **Commit changes**.
+**Rossz kép törlése:** nyisd meg a képet, kattints a **⋯** menüre, válaszd a **Delete file** pontot, majd **Commit changes**.
 
 A `.gitkeep` fájlokat ne töröld: ezek tartják meg az üres mappákat.
