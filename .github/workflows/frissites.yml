@@ -1,0 +1,64 @@
+name: Frissítés és közzététel
+
+on:
+  schedule:
+    - cron: '15 5,11,17,21 * * *'   # naponta 4× (UTC) letölti az új eredményeket az MLSZ adatbankból
+  push:
+    branches: [main]                 # fotó- vagy nyilatkozat-feltöltés után azonnal újraépít
+  workflow_dispatch:                 # kézzel is indítható: Actions → Frissítés és közzététel → Run workflow
+
+permissions:
+  contents: write
+  pages: write
+  id-token: write
+
+concurrency:
+  group: pages
+  cancel-in-progress: false
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+
+      - name: Eredmények letöltése (MLSZ adatbank)
+        id: scrape
+        continue-on-error: true        # ha az adatbank épp nem elérhető, a legutóbbi adatokkal épül
+        run: node scrape.mjs
+
+      - name: Új adatok mentése a tárolóba
+        if: steps.scrape.outcome == 'success'
+        run: |
+          if ! git diff --quiet -- data.js; then
+            git config user.name "github-actions[bot]"
+            git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+            git add data.js
+            git commit -m "Adatfrissítés az MLSZ adatbankból"
+            git pull --rebase
+            git push
+          fi
+
+      - name: Képkicsinyítő telepítése
+        continue-on-error: true
+        run: npm install --no-save --no-package-lock sharp@0.33.5
+
+      - name: Webapp összeállítása
+        run: node build.mjs
+
+      - uses: actions/configure-pages@v5
+
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          path: dist
+
+      - name: Közzététel
+        id: deployment
+        uses: actions/deploy-pages@v4

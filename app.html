@@ -1,0 +1,366 @@
+<title>FC Hatvan Leány U14</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@600;700;800&family=Barlow:wght@400;500;600&display=swap">
+<style>
+/* Layout: one-column phone app — sticky crest header, season strip, round cards, bottom tab bar */
+:root{
+  --blue:#1b4fa8; --blue-deep:#123a80; --yellow:#f5c518;
+  --bg:#eef2f9; --surface:#ffffff; --ink:#14213d; --muted:#5b6782; --line:#d8dfec;
+  --win:#1e9e5a; --draw:#c99a06; --loss:#d0453b; --hl:#fff3c2;
+  --display:'Barlow Condensed','Arial Narrow',Arial,sans-serif;
+  --body:'Barlow',system-ui,-apple-system,'Segoe UI',sans-serif;
+}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){
+  --bg:#0b1428; --surface:#14203b; --ink:#e8edf7; --muted:#9aa7c2; --line:#24345a;
+  --blue:#3f7be0; --blue-deep:#0f2a5e; --hl:#3a3110; color-scheme:dark}}
+:root[data-theme="dark"]{
+  --bg:#0b1428; --surface:#14203b; --ink:#e8edf7; --muted:#9aa7c2; --line:#24345a;
+  --blue:#3f7be0; --blue-deep:#0f2a5e; --hl:#3a3110; color-scheme:dark}
+
+*{box-sizing:border-box}
+html,body{background:var(--bg)}
+body{color:var(--ink);font-family:var(--body);font-size:15px;line-height:1.45;margin:0;padding-bottom:calc(76px + env(safe-area-inset-bottom,0px))}
+body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);z-index:30;background:var(--blue-deep)}
+.wrap{max-width:640px;margin:0 auto;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
+a{color:var(--blue)}
+:focus-visible{outline:3px solid var(--yellow);outline-offset:2px}
+
+/* header */
+header{position:sticky;top:env(safe-area-inset-top,0px);z-index:20;background:var(--blue-deep);color:#fff;border-bottom:4px solid var(--yellow)}
+header .wrap{display:flex;align-items:center;gap:12px;padding-block:10px}
+header img{width:44px;height:44px;border-radius:50%;background:#fff;padding:2px;flex:none}
+header h1{font-family:var(--display);font-weight:800;font-size:22px;letter-spacing:.02em;margin:0;line-height:1.05;text-transform:uppercase}
+header p{margin:0;font-size:12px;opacity:.8;line-height:1.3}
+.back{background:none;border:0;color:#fff;font:600 15px var(--body);padding:6px 4px;cursor:pointer;display:flex;align-items:center;gap:4px}
+
+/* season strip */
+.season{background:linear-gradient(180deg,var(--blue-deep),var(--blue));color:#fff}
+.season .wrap{padding-block:14px 18px;display:grid;grid-template-columns:auto 1fr;gap:14px;align-items:center}
+.pos{font-family:var(--display);font-weight:800;font-size:56px;line-height:.9;color:var(--yellow)}
+.pos small{display:block;font-size:13px;letter-spacing:.12em;color:#fff;opacity:.8;font-weight:600}
+.stats{display:flex;flex-wrap:wrap;gap:6px 16px;font-variant-numeric:tabular-nums}
+.stat b{font-family:var(--display);font-size:24px;display:block;line-height:1}
+.stat span{font-size:11px;text-transform:uppercase;letter-spacing:.08em;opacity:.8}
+.form{display:flex;gap:4px;margin-top:8px}
+.pill{font:700 12px var(--display);width:24px;height:24px;border-radius:6px;display:grid;place-items:center;color:#fff}
+.W{background:var(--win)}.D{background:var(--draw)}.L{background:var(--loss)}.N{background:var(--muted)}
+
+main .wrap{padding-block:16px;display:grid;gap:12px}
+h2.sec{font-family:var(--display);font-weight:700;font-size:15px;text-transform:uppercase;letter-spacing:.1em;color:var(--muted);margin:8px 0 0}
+
+/* next match */
+.next{background:var(--surface);border:2px solid var(--yellow);border-radius:14px;padding:14px;display:grid;gap:8px}
+.next .lbl{font:700 12px var(--display);letter-spacing:.12em;text-transform:uppercase;color:var(--blue)}
+.vs{display:grid;grid-template-columns:1fr auto 1fr;align-items:center;gap:8px;text-align:center}
+.vs .t{display:grid;justify-items:center;gap:6px;font:700 15px/1.1 var(--display);text-transform:uppercase;min-width:0}
+.vs img{width:48px;height:48px;object-fit:contain}
+.vs .mid{font:800 30px var(--display);font-variant-numeric:tabular-nums;white-space:nowrap}
+.meta{font-size:13px;color:var(--muted);text-align:center}
+
+/* round cards */
+.rounds{display:grid;gap:8px}
+.rc{display:grid;grid-template-columns:42px 40px 1fr auto;gap:10px;align-items:center;background:var(--surface);border-radius:12px;padding:10px 12px;border:1px solid var(--line);cursor:pointer;text-align:left;color:inherit;font:inherit;width:100%}
+.rc:hover{border-color:var(--blue)}
+.rno{font:800 22px var(--display);color:var(--blue);text-align:center;line-height:1}
+.rno small{display:block;font-size:10px;letter-spacing:.1em;color:var(--muted);font-weight:600}
+.rc img{width:40px;height:40px;object-fit:contain}
+.opp{min-width:0}
+.opp b{display:block;font:700 16px/1.15 var(--display);text-transform:uppercase;overflow-wrap:anywhere}
+.opp span{font-size:12px;color:var(--muted)}
+.sc{display:flex;align-items:center;gap:8px;font:800 22px var(--display);font-variant-numeric:tabular-nums}
+.tag{font:600 10px var(--body);letter-spacing:.06em;text-transform:uppercase;padding:1px 6px;border-radius:4px;background:var(--bg);color:var(--muted);margin-left:4px;vertical-align:1px}
+.cam{font-size:11px;color:var(--blue);font-weight:600}
+
+/* detail */
+.hero{background:var(--surface);border-radius:14px;padding:16px 12px;display:grid;gap:10px;border:1px solid var(--line)}
+.hero .mid{font-size:44px}
+.res-strip{height:6px;border-radius:3px}
+.card{background:var(--surface);border-radius:14px;padding:14px;border:1px solid var(--line);display:grid;gap:10px;min-width:0}
+.card h3{font:700 16px var(--display);text-transform:uppercase;letter-spacing:.06em;margin:0;color:var(--blue)}
+.ev{display:grid;grid-template-columns:1fr 46px 1fr;gap:6px;align-items:center;font-size:14px}
+.ev .m{font:700 14px var(--display);text-align:center;color:var(--muted);font-variant-numeric:tabular-nums}
+.ev .h{text-align:right}.ev .a{text-align:left}
+.ev .sub{font-size:12px;color:var(--muted)}
+.ic{display:inline-block;font-size:13px;width:18px;text-align:center}
+.yc{display:inline-block;width:10px;height:14px;background:#f2c200;border-radius:2px;vertical-align:-2px}
+.rcd{display:inline-block;width:10px;height:14px;background:#d0302a;border-radius:2px;vertical-align:-2px}
+.lineups{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+@media (max-width:420px){.lineups{grid-template-columns:1fr}}
+.lu h4{margin:0 0 6px;font:700 14px var(--display);text-transform:uppercase;display:flex;align-items:center;gap:6px}
+.lu h4 img{width:20px;height:20px;object-fit:contain}
+.lu ol{list-style:none;margin:0;padding:0;display:grid;gap:2px}
+.lu li{display:grid;grid-template-columns:28px 1fr auto;gap:6px;padding:3px 6px;border-radius:6px;font-size:14px;align-items:center}
+.lu li .n{font:700 14px var(--display);color:var(--muted);text-align:right;font-variant-numeric:tabular-nums}
+.lu li.me{background:var(--hl);font-weight:600}
+.lu .bench{font:600 11px var(--body);letter-spacing:.08em;text-transform:uppercase;color:var(--muted);margin:8px 0 2px 6px}
+.facts{display:grid;grid-template-columns:auto 1fr;gap:4px 12px;font-size:14px;margin:0}
+.facts dt{color:var(--muted)}.facts dd{margin:0}
+.photos{display:grid;gap:10px}
+.photos figure{margin:0}
+.photos img{width:100%;border-radius:10px;display:block}
+.photos figcaption{font-size:12px;color:var(--muted);margin-top:4px}
+.empty{font-size:14px;color:var(--muted)}
+blockquote{margin:0;padding:10px 14px;border-left:4px solid var(--yellow);background:var(--bg);border-radius:0 8px 8px 0;font-style:italic}
+.btn{display:inline-flex;align-items:center;gap:6px;background:var(--blue);color:#fff;text-decoration:none;font:600 14px var(--body);padding:10px 14px;border-radius:10px;justify-self:start}
+
+/* table & scorers */
+.tbl{overflow-x:auto}
+table{border-collapse:collapse;width:100%;font-variant-numeric:tabular-nums;font-size:14px}
+th{font:600 11px var(--body);letter-spacing:.06em;text-transform:uppercase;color:var(--muted);text-align:right;padding:6px 4px;border-bottom:1px solid var(--line)}
+td{padding:7px 4px;text-align:right;border-bottom:1px solid var(--line)}
+th.l,td.l{text-align:left}
+td.team{display:flex;align-items:center;gap:6px;min-width:150px}
+td.team img{width:20px;height:20px;object-fit:contain}
+tr.us td{background:var(--hl);font-weight:700}
+td.pts{font:800 16px var(--display)}
+.bar{height:8px;border-radius:4px;background:var(--blue)}
+.sc-row{display:grid;grid-template-columns:24px 1fr auto;gap:10px;align-items:center;padding:6px 0;border-bottom:1px solid var(--line)}
+.sc-row .g{font:800 20px var(--display);color:var(--blue);min-width:28px;text-align:right}
+.sc-row .nm{display:grid;gap:4px;min-width:0}
+.zita{background:var(--surface);border-radius:14px;padding:14px;border:2px solid var(--yellow);display:grid;gap:8px}
+.zita .big{display:flex;gap:18px;flex-wrap:wrap}
+.zita .big div b{font:800 30px var(--display);color:var(--blue);display:block;line-height:1}
+.zita .big div span{font-size:11px;text-transform:uppercase;letter-spacing:.08em;color:var(--muted)}
+.upd{font-size:12px;color:var(--muted);text-align:center}
+
+/* install banner */
+.install{display:grid;grid-template-columns:40px 1fr auto;gap:12px;align-items:start;background:var(--surface);border:2px dashed var(--blue);border-radius:14px;padding:12px}
+.install img{width:40px;height:40px}
+.install p{margin:2px 0 8px;font-size:13px;color:var(--muted)}
+.install .x{background:none;border:0;font-size:22px;line-height:1;color:var(--muted);cursor:pointer;padding:0 4px}
+
+/* bottom nav */
+nav.tabs{position:fixed;left:0;right:0;bottom:0;z-index:20;background:var(--surface);border-top:1px solid var(--line);padding-bottom:env(safe-area-inset-bottom,0px)}
+nav.tabs .wrap{display:grid;grid-template-columns:repeat(4,1fr)}
+nav.tabs button{background:none;border:0;padding:10px 4px 8px;font:600 12px var(--body);color:var(--muted);cursor:pointer;display:grid;justify-items:center;gap:2px;border-top:3px solid transparent}
+nav.tabs button svg{width:22px;height:22px}
+nav.tabs button[aria-current="page"]{color:var(--blue);border-top-color:var(--yellow)}
+@media (prefers-reduced-motion:no-preference){.rc,.btn{transition:border-color .15s,transform .15s}.rc:active{transform:scale(.99)}}
+</style>
+
+<header><div class="wrap" id="hdr"></div></header>
+<div id="season"></div>
+<main><div class="wrap" id="view"></div></main>
+<nav class="tabs" aria-label="Fő menü"><div class="wrap">
+  <button data-go="fordulok"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="17" rx="2"/><path d="M3 9h18M8 2v4M16 2v4"/></svg>Fordulók</button>
+  <button data-go="tabella"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 6h16M4 12h16M4 18h16"/></svg>Tabella</button>
+  <button data-go="gollovok"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/><path d="M12 7l4 3-1.5 5h-5L8 10z"/></svg>Góllövők</button>
+  <button data-go="jatekos"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 3l2.6 5.6 6.1.7-4.5 4.2 1.2 6L12 16.6 6.6 19.5l1.2-6L3.3 9.3l6.1-.7z"/></svg><span id="hlTab">Zita</span></button>
+</div></nav>
+
+<script src="data.js"></script>
+<script src="content.js"></script>
+<script>
+(function(){
+const D = window.HATVAN_DATA, C0 = window.HATVAN_CONTENT || {rounds:{}}, AUTO = window.HATVAN_AUTO || {rounds:{}};
+// A fotok/fordulo-XX mappákból jövő képek és nyilatkozatok összefésülése a kézi content.js-sel
+const C = {...C0, rounds: {}};
+new Set([...Object.keys(C0.rounds||{}), ...Object.keys(AUTO.rounds||{})]).forEach(r => {
+  const a = (C0.rounds||{})[r] || {}, b = (AUTO.rounds||{})[r] || {};
+  C.rounds[r] = { photos: [...(a.photos||[]), ...(b.photos||[])], statement: a.statement || b.statement || null };
+});
+const US = D.team, HL = C.highlight || '';
+const $ = s => document.querySelector(s);
+const esc = s => String(s ?? '').replace(/[&<>"]/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+const nice = s => String(s||'').toLocaleLowerCase('hu').replace(/(^|[\s\-.])(\p{L})/gu, (m,a,b)=>a+b.toLocaleUpperCase('hu'));
+const short = t => ({'VÁRDA SPORT EGYESÜLET KISVÁRDA':'Várda SE Kisvárda','MEZŐKÖVESD ZSÓRY FC KFT.':'Mezőkövesd Zsóry','NYÍREGYHÁZA SPARTACUS FC':'Nyíregyháza Spartacus','KOLORCITY KAZINBARCIKA SC':'Kolorcity Kazincbarcika','FC HATVAN':'FC Hatvan','UTE':'UTE','DVTK':'DVTK','DVSC-DEAC':'DVSC-DEAC','BVSC - ZUGLÓ':'BVSC-Zugló','EGER SE':'Eger SE','GÖDÖLLŐI SK':'Gödöllői SK','KISTIGRISEK USE':'Kistigrisek USE'}[t] || nice(t));
+const IMG = window.HATVAN_IMG || {};           // APK-ban: beágyazott képek (data URI)
+const img = p => IMG[p] || p;
+const logo = t => D.logos[t] ? img('img/logos/' + D.logos[t]) : '';
+const months = ['jan.','febr.','márc.','ápr.','máj.','jún.','júl.','aug.','szept.','okt.','nov.','dec.'];
+const days = ['vasárnap','hétfő','kedd','szerda','csütörtök','péntek','szombat'];
+const fmtDate = (d,t,long) => { if(!d) return ''; const [y,m,dd]=d.split('.').map(Number); const dt=new Date(y,m-1,dd); return `${long?y+'. ':''}${months[m-1]} ${dd}.${long?' '+days[dt.getDay()]:''}${t?' · '+t:''}`; };
+
+const M = D.matches.map(m => {
+  const home = m.home === US, played = m.hs != null;
+  const gf = home ? m.hs : m.as, ga = home ? m.as : m.hs;
+  const r = !played ? 'N' : gf > ga ? 'W' : gf < ga ? 'L' : 'D';
+  return {...m, isHome: home, opp: home ? m.away : m.home, played, gf, ga, r};
+});
+const RL = {W:'GY', D:'D', L:'V', N:'–'};
+const played = M.filter(m => m.played);
+const next = M.find(m => !m.played);
+const row = D.table.find(t => t.team.trim() === US) || {};
+
+function header(back){
+  $('#hdr').innerHTML = back
+    ? `<button class="back" data-back aria-label="Vissza"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M15 18l-6-6 6-6"/></svg>Fordulók</button>
+       <div style="margin-left:auto;display:flex;align-items:center;gap:8px"><h1>${back}</h1><img src="${logo(US)}" alt="" style="width:32px;height:32px"></div>`
+    : `<img src="${logo(US)}" alt="FC Hatvan címer"><div><h1>FC Hatvan · Leány U14</h1><p>${esc(D.league.replace('MLSZ ',''))}</p></div>`;
+}
+function season(show){
+  if(!show){ $('#season').innerHTML=''; return; }
+  const last5 = played.slice(-5);
+  $('#season').innerHTML = `<section class="season"><div class="wrap">
+    <div class="pos">${row.pos ?? '–'}.<small>HELYEZÉS</small></div>
+    <div><div class="stats">
+      <div class="stat"><b>${row.pts ?? '–'}</b><span>pont</span></div>
+      <div class="stat"><b>${row.w}-${row.d}-${row.l}</b><span>gy-d-v</span></div>
+      <div class="stat"><b>${row.gf}:${row.ga}</b><span>gólarány</span></div>
+    </div>
+    <div class="form" aria-label="Utolsó 5 meccs">${last5.map(m=>`<span class="pill ${m.r}" title="${esc(short(m.opp))} ${m.gf}-${m.ga}">${RL[m.r]}</span>`).join('')}</div></div>
+  </div></section>`;
+}
+
+function vs(m, big){
+  const mid = m.played ? `${m.hs} – ${m.as}` : (m.time || 'vs');
+  return `<div class="vs">
+    <div class="t"><img src="${logo(m.home)}" alt="">${esc(short(m.home))}</div>
+    <div class="mid" ${big?'style="font-size:44px"':''}>${mid}</div>
+    <div class="t"><img src="${logo(m.away)}" alt="">${esc(short(m.away))}</div></div>`;
+}
+
+function listView(){
+  header(); season(true);
+  const nextHtml = next ? `<h2 class="sec">Következő meccs</h2>
+    <button class="next" data-round="${next.round}" style="text-align:left;font:inherit;color:inherit;cursor:pointer">
+      <span class="lbl">${next.round}. forduló · ${next.isHome?'Hazai':'Idegenben'}</span>${vs(next)}
+      <div class="meta">${fmtDate(next.date,next.time,true)}${next.time?'':' · az időpont még nincs kiírva'}<br>${esc(next.venue)}</div></button>` : '';
+  const later = M.filter(m => !m.played && m !== next);
+  const laterHtml = later.length ? `<h2 class="sec">További sorsolás</h2><div class="rounds">${later.map(m => `
+    <button class="rc" data-round="${m.round}"><div class="rno">${m.round}.<small>FORD.</small></div>
+      <img src="${logo(m.opp)}" alt=""><div class="opp"><b>${esc(short(m.opp))}</b><span>${fmtDate(m.date,m.time)}<span class="tag">${m.isHome?'hazai':'idegen'}</span></span></div>
+      <div class="sc" style="font-size:15px;color:var(--muted)">${m.time||'–'}</div></button>`).join('')}</div>` : '';
+  const cards = [...played].reverse().map(m => {
+    const c = C.rounds[m.round] || {};
+    const photos = (c.photos||[]).length;
+    return `<button class="rc" data-round="${m.round}">
+      <div class="rno">${m.round}.<small>FORD.</small></div>
+      <img src="${logo(m.opp)}" alt="">
+      <div class="opp"><b>${esc(short(m.opp))}</b><span>${fmtDate(m.date)}<span class="tag">${m.isHome?'hazai':'idegen'}</span>${photos?` <span class="cam">· ${photos} fotó</span>`:''}</span></div>
+      <div class="sc">${m.gf}–${m.ga}<span class="pill ${m.r}">${RL[m.r]}</span></div></button>`;
+  }).join('');
+  $('#view').innerHTML = installBanner() + nextHtml + `<h2 class="sec">Lejátszott fordulók</h2><div class="rounds">${cards}</div>${laterHtml}
+    <p class="upd">Forrás: MLSZ adatbank · adatok frissítve ${new Date(D.updated).toLocaleString('hu-HU',{dateStyle:'medium',timeStyle:'short'})}</p>`;
+}
+
+// "Tedd ki a kezdőképernyőre" sáv – csak a telepíthető (manifestes) változatban, amíg nincs telepítve
+let installEvt = null;
+const isStandalone = () => matchMedia('(display-mode: standalone)').matches || navigator.standalone === true;
+function installBanner(){
+  if (!document.querySelector('link[rel="manifest"]') || isStandalone()) return '';
+  try { if (localStorage.getItem('hu14-install-hidden')) return ''; } catch(e) {}
+  const ios = /iphone|ipad|ipod/i.test(navigator.userAgent) || (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1);
+  const how = installEvt ? '' : ios
+    ? 'Safariban koppints a <b>Megosztás</b> gombra (négyzet felfelé nyíllal), majd a <b>Főképernyőhöz adás</b> pontra.'
+    : 'A böngésző menüjében (⋮) válaszd a <b>Telepítés</b> vagy a <b>Hozzáadás a kezdőképernyőhöz</b> pontot.';
+  return `<section class="install"><img src="${logo(US)}" alt=""><div><b>Tedd ki a kezdőképernyőre</b>
+    <p>${installEvt ? 'Egy koppintás, és appként nyílik meg, internet nélkül is.' : how}</p>
+    ${installEvt ? '<button class="btn" data-install>Telepítés</button>' : ''}</div>
+    <button class="x" data-dismiss aria-label="Bezárás">×</button></section>`;
+}
+window.addEventListener('beforeinstallprompt', e => { e.preventDefault(); installEvt = e; if (!location.hash || location.hash === '#fordulok') listView(); });
+if ('serviceWorker' in navigator && document.querySelector('link[rel="manifest"]')) navigator.serviceWorker.register('sw.js').catch(() => {});
+
+function evRow(e, m){
+  const name = n => `<span class="${n===HL?'me':''}">${esc(nice(n))}</span>`;
+  let txt;
+  if(e.type==='swap') txt = `<span class="ic" aria-label="csere">⇄</span>${name(e.in)}<div class="sub">le: ${esc(nice(e.out))}</div>`;
+  else if(e.type==='yellowcard') txt = `<span class="yc" aria-label="sárga lap"></span> ${name(e.name)}`;
+  else if(/red/.test(e.type)) txt = `<span class="rcd" aria-label="piros lap"></span> ${name(e.name)}`;
+  else {
+    const extra = e.type==='own_goal' ? ' <span class="sub">(öngól)</span>' : e.type==='penalty_goal' ? ' <span class="sub">(11-es)</span>' : '';
+    txt = `<span class="ic" aria-label="gól">⚽</span>${name(e.name)}${extra}${e.score?`<div class="sub">${e.score}</div>`:''}`;
+  }
+  return `<div class="ev"><div class="h">${e.side==='h'?txt:''}</div><div class="m">${e.min}'</div><div class="a">${e.side==='a'?txt:''}</div></div>`;
+}
+
+function lineup(team, lu, evs, side){
+  const scored = n => evs.filter(e=>e.side===side && /goal/.test(e.type) && e.type!=='own_goal' && e.name===n).length;
+  const sub = n => evs.find(e=>e.side===side && e.type==='swap' && (e.in===n||e.out===n));
+  const li = p => { const g=scored(p.name), s=sub(p.name);
+    const marks = (g?'⚽'.repeat(g):'') + (s ? (s.in===p.name?` ↑${s.min}'`:` ↓${s.min}'`) : '');
+    return `<li class="${p.name===HL?'me':''}"><span class="n">${esc(p.n)}</span><span>${esc(nice(p.name))}</span><span class="sub">${marks}</span></li>`; };
+  return `<div class="lu"><h4><img src="${logo(team)}" alt="">${esc(short(team))}</h4>
+    <ol>${lu.players.map(li).join('')}</ol>
+    ${lu.subs.length?`<div class="bench">Cserék</div><ol>${lu.subs.map(li).join('')}</ol>`:''}
+    ${lu.coach?`<div class="bench">Vezetőedző: ${esc(nice(lu.coach))}</div>`:''}</div>`;
+}
+
+function roundView(n){
+  const m = M.find(x => x.round === n); if(!m) return listView();
+  header(`${m.round}. forduló`); season(false);
+  const c = C.rounds[m.round] || {};
+  // running score on goals
+  let h=0,a=0; const evs = m.events.map(e => { if(/goal/.test(e.type)){ e.side==='h'?h++:a++; return {...e, score:`${h}–${a}`}; } return e; });
+  const color = {W:'var(--win)',D:'var(--draw)',L:'var(--loss)',N:'var(--line)'}[m.r];
+  const res = m.played ? ({W:'Győzelem',D:'Döntetlen',L:'Vereség'})[m.r] : 'Még nem játszották le';
+  const photos = (c.photos||[]).map(p=>`<figure><img src="${esc(img(p.src))}" alt="${esc(p.caption||'Csapatkép')}" loading="lazy" onerror="this.closest('figure').hidden=true"><figcaption>${esc(p.caption||('Csapatkép · ' + short(m.opp) + ', ' + fmtDate(m.date)))}</figcaption></figure>`).join('');
+  const st = c.statement;
+  $('#view').innerHTML = `
+    <section class="hero"><div class="res-strip" style="background:${color}"></div>${vs(m,true)}
+      <div class="meta"><b>${res}</b> · ${m.isHome?'hazai pálya':'idegenben'}</div></section>
+    ${photos?`<section class="card"><h3>Csapatkép</h3><div class="photos">${photos}</div></section>`:''}
+    ${m.played?`<section class="card"><h3>Mérkőzés eseményei</h3>
+      ${evs.length?evs.map(e=>evRow(e,m)).join(''):'<p class="empty">Nincs rögzített esemény.</p>'}</section>`:''}
+    <section class="card"><h3>Nyilatkozat</h3>
+      ${st?`<blockquote>${esc(st.text).replace(/\n/g,'<br>')}</blockquote><div class="sub">${esc(st.author||'')}${st.source?` · <a href="${esc(st.source)}" target="_blank" rel="noopener">forrás</a>`:''}</div>`
+          :'<p class="empty">Ehhez a fordulóhoz még nincs nyilatkozat.</p>'}</section>
+    ${m.lh.players.length?`<section class="card"><h3>Jegyzőkönyv – összeállítások</h3>
+      <div class="lineups">${m.isHome?lineup(m.home,m.lh,evs,'h')+lineup(m.away,m.la,evs,'a'):lineup(m.away,m.la,evs,'a')+lineup(m.home,m.lh,evs,'h')}</div></section>`:''}
+    <section class="card"><h3>Adatok</h3><dl class="facts">
+      <dt>Időpont</dt><dd>${fmtDate(m.date,m.time,true)}</dd>
+      <dt>Helyszín</dt><dd>${esc(m.venue)}</dd>
+      ${m.ref?`<dt>Játékvezető</dt><dd>${esc(nice(m.ref))}</dd>`:''}
+    </dl><a class="btn" href="${esc(m.url)}" target="_blank" rel="noopener">Hivatalos jegyzőkönyv az MLSZ adatbankban ↗</a></section>`;
+}
+
+function tableView(){
+  header(); season(true);
+  $('#view').innerHTML = `<h2 class="sec">Tabella</h2><section class="card tbl"><table>
+    <thead><tr><th class="l">#</th><th class="l">Csapat</th><th>M</th><th>Gy</th><th>D</th><th>V</th><th>Gól</th><th>P</th></tr></thead>
+    <tbody>${D.table.map(t=>`<tr class="${t.team.trim()===US?'us':''}"><td class="l">${t.pos}.</td>
+      <td class="l team"><img src="${logo(t.team.trim())}" alt="">${esc(short(t.team.trim()))}</td>
+      <td>${t.m}</td><td>${t.w}</td><td>${t.d}</td><td>${t.l}</td><td>${t.gf}:${t.ga}</td><td class="pts">${t.pts}</td></tr>`).join('')}</tbody></table></section>
+    <p class="upd"><a href="${esc(D.leagueUrl)}" target="_blank" rel="noopener">Teljes bajnokság az MLSZ adatbankban ↗</a></p>`;
+}
+
+function scorersView(){
+  header(); season(true);
+  const max = Math.max(1, ...D.scorers.map(s=>s.goals));
+  $('#view').innerHTML = `<h2 class="sec">Hatvani góllövők</h2><section class="card">
+    ${D.scorers.map((s,i)=>`<div class="sc-row"><span class="sub">${i+1}.</span>
+      <div class="nm"><span class="${s.name===HL?'me':''}">${esc(nice(s.name))}</span><div class="bar" style="width:${s.goals/max*100}%"></div></div>
+      <span class="g">${s.goals}</span></div>`).join('')}</section>`;
+}
+
+function playerView(){
+  header(); season(true);
+  const apps = played.map(m => { const lu = m.isHome?m.lh:m.la, side=m.isHome?'h':'a';
+    const p = lu.players.find(x=>x.name===HL), b = lu.subs.find(x=>x.name===HL);
+    const goals = m.events.filter(e=>e.side===side && /goal/.test(e.type) && e.type!=='own_goal' && e.name===HL).length;
+    return {m, start:!!p, bench:!!b, num:(p||b||{}).n, goals}; });
+  const starts = apps.filter(a=>a.start).length, bench = apps.filter(a=>a.bench).length, goals = apps.reduce((s,a)=>s+a.goals,0);
+  $('#view').innerHTML = `<section class="zita"><h3 style="margin:0;font:800 24px var(--display);text-transform:uppercase">${esc(nice(HL))}</h3>
+    <div class="big"><div><b>${starts}</b><span>kezdő</span></div><div><b>${bench}</b><span>cserepad</span></div><div><b>${goals}</b><span>gól</span></div><div><b>${starts+bench}/${played.length}</b><span>keretben</span></div></div></section>
+    <h2 class="sec">Fordulónként</h2><div class="rounds">${apps.slice().reverse().map(a=>`<button class="rc" data-round="${a.m.round}">
+      <div class="rno">${a.m.round}.<small>FORD.</small></div><img src="${logo(a.m.opp)}" alt="">
+      <div class="opp"><b>${esc(short(a.m.opp))}</b><span>${a.start?'Kezdő':a.bench?'Cserepad':'Nem volt keretben'}${a.num?` · ${a.num}-es mez`:''}${a.goals?' · '+'⚽'.repeat(a.goals):''}</span></div>
+      <div class="sc">${a.m.gf}–${a.m.ga}<span class="pill ${a.m.r}">${RL[a.m.r]}</span></div></button>`).join('')}</div>`;
+}
+
+function route(){
+  const h = (location.hash||'').slice(1) || 'fordulok';
+  const r = h.match(/^r(\d+)$/);
+  const tab = r ? 'fordulok' : h;
+  document.querySelectorAll('nav.tabs button').forEach(b => b.dataset.go===tab ? b.setAttribute('aria-current','page') : b.removeAttribute('aria-current'));
+  if(r) roundView(+r[1]);
+  else if(h==='tabella') tableView();
+  else if(h==='gollovok') scorersView();
+  else if(h==='jatekos') playerView();
+  else listView();
+  window.scrollTo(0,0);
+}
+document.addEventListener('click', e => {
+  const r = e.target.closest('[data-round]'); if(r){ location.hash = 'r'+r.dataset.round; return; }
+  const g = e.target.closest('[data-go]'); if(g){ location.hash = g.dataset.go; return; }
+  if(e.target.closest('[data-back]')) location.hash = 'fordulok';
+  if(e.target.closest('[data-install]') && installEvt){ installEvt.prompt(); installEvt.userChoice.finally(() => { installEvt = null; listView(); }); }
+  if(e.target.closest('[data-dismiss]')){ try { localStorage.setItem('hu14-install-hidden', '1'); } catch(_) {} e.target.closest('.install').hidden = true; }
+});
+$('#hlTab').textContent = nice(HL).split(' ').slice(-1)[0] || 'Játékos';
+window.addEventListener('hashchange', route);
+route();
+})();
+</script>
