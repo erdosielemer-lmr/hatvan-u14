@@ -61,4 +61,13 @@ jobs:
 
       - name: Közzététel
         id: deployment
+        continue-on-error: true        # a GitHub néha nem látja azonnal a feltöltött csomagot
+        uses: actions/deploy-pages@v4
+
+      - name: Várakozás újrapróbálás előtt
+        if: steps.deployment.outcome == 'failure'
+        run: sleep 30
+
+      - name: Közzététel (2. próba)
+        if: steps.deployment.outcome == 'failure'
         uses: actions/deploy-pages@v4
