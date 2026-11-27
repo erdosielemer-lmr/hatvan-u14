@@ -1,6 +1,6 @@
-// Automatikusan generálva: node scrape.mjs  (2026-11-22T20:34:29.131Z)
+// Automatikusan generálva: node scrape.mjs  (2026-11-27T22:11:13.284Z)
 window.HATVAN_DATA = {
- "updated": "2026-11-22T20:34:29.131Z",
+ "updated": "2026-11-27T22:11:13.284Z",
  "league": "MLSZ Leány Regionális HNP U-14 Észak-Keleti csoport",
  "leagueUrl": "https://adatbank.mlsz.hu/league/67/0/34381/11.html",
  "team": "FC HATVAN",
@@ -46,14 +46,14 @@ window.HATVAN_DATA = {
   {
    "pos": 3,
    "team": "GÖDÖLLŐI SK",
-   "m": 10,
-   "w": 7,
+   "m": 11,
+   "w": 8,
    "d": 1,
    "l": 2,
-   "gf": 73,
+   "gf": 97,
    "ga": 24,
-   "gd": 49,
-   "pts": 22
+   "gd": 73,
+   "pts": 25
   },
   {
    "pos": 4,
@@ -142,13 +142,13 @@ window.HATVAN_DATA = {
   {
    "pos": 11,
    "team": "BVSC - ZUGLÓ",
-   "m": 10,
+   "m": 11,
    "w": 1,
    "d": 0,
-   "l": 9,
+   "l": 10,
    "gf": 12,
-   "ga": 92,
-   "gd": -80,
+   "ga": 116,
+   "gd": -104,
    "pts": 3
   },
   {
